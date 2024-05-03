@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    button {
+        background-color: rgb(20, 117, 113);
+        color: #fff;
+        align-items: center;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        border: none;
+        left: 8rem;
+        position: relative;
+        transition: 0.3s ease-in-out;
+    }
+
+    button:hover {
+        background: #108eb8;     
+    }
+
+</style>
+
+    <form method="post" enctype="multipart/form-data" style="max-width: 400px; margin: 0 auto;">
+        {% csrf_token %}
+        <table style="width: 100%; border-collapse: collapse; margin: 40px;">
+            {{ form.as_table }}
+        </table>
+        <div>
+            <button type="submit" value="Cadastrar">Cadastrar</button>
+        </div>
+    </form>
+{% endblock %}

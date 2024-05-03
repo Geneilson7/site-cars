@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %} Cars Multimarcas {% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      margin-bottom: 5rem;
+    }
+
+    footer {
+      background-color: rgb(20, 117, 113);
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      transition: transform 0.3s;
+      animation-iteration-count: 1
+    }
+
+    footer p {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+
+    }
+
+    .footer-hidden {
+      transform: translateY(100%);
+
+    }
+
+    /* Estilo para telas menores, como smartphones */
+    @media (max-width: 768px) {
+      .navbar-brand {
+        font-size: 1.2rem;
+        margin-left: 0.5rem;
+        padding: 10px 1.5rem;
+      }
+
+      .nav-link {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Estilo para telas muito pequenas, como dispositivos móveis em modo retrato */
+    @media (max-width: 576px) {
+      .navbar-brand {
+        font-size: 1rem;
+        padding: 10px 1rem;
+      }
+
+      .nav-link {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(20, 117, 113);">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'cars_list' %}" style="font-size: 1.4rem; font-weight: 650; color: #fff;">
+          <span style="color: #12f7ff;">Cars</span> Multimarcas
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cars_list' %}">Início</a>
+            </li>
+
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'new_car' %}">Cadastrar Carro</a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item">
+              <a class="nav-link" href="">Sobre Nós</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="">Contato</a>
+            </li>
+
+            {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Cadastre-se</a>
+            </li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Sair</a>
+            </li>
+            {% endif %}
+          </ul>
+
+          <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" style="text-decoration: none; font-size: .9rem; font-weight: 400; color: #fff;"
+                href="#">Olá, {{ user.username }}</a>
+            </li>
+            {% endif %}
+
+            {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Cars Multimarcas</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous">
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let prevScrollPos = window.pageYOffset;
+      const footer = document.querySelector("footer");
+
+      window.onscroll = function () {
+        let currentScrollPos = window.pageYOffset;
+
+        if (prevScrollPos < currentScrollPos) {
+          // O usuário está rolando para baixo
+          footer.classList.remove("footer-hidden");
+        } else {
+          // O usuário está rolando para cima
+          footer.classList.add("footer-hidden");
+        }
+
+        prevScrollPos = currentScrollPos;
+      };
+    });
+  </script>
+
+</body>
+
+</html>
